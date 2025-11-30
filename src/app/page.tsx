@@ -11,7 +11,7 @@ type Expense = {
 
 export default function Page() {
   const today = new Date().toISOString().split('T')[0];
-
+  
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
@@ -20,8 +20,8 @@ export default function Page() {
   const [isAdding, setIsAdding] = useState(false);
 
   const loadExpenses = async (searchQuery = "") => {
-    const url = searchQuery
-      ? `/api/expenses/search?q=${encodeURIComponent(searchQuery)}`
+    const url = searchQuery 
+      ? `/api/search?q=${encodeURIComponent(searchQuery)}`
       : "/api/expenses";
     const res = await fetch(url);
     const data = await res.json();
@@ -33,7 +33,7 @@ export default function Page() {
   const addExpense = async () => {
     if (isAdding) return;
     setIsAdding(true);
-
+    
     try {
       await fetch("/api/expenses", {
         method: "POST",
@@ -44,7 +44,7 @@ export default function Page() {
           date: date || today,
         }),
       });
-
+      
       setName("");
       setAmount("");
       setDate(today);
@@ -86,7 +86,7 @@ export default function Page() {
       />
 
       <h2>{search ? "Результаты поиска:" : "5 последних трат:"}</h2>
-
+      
       <div>
         {expenses.map(item => (
           <div key={item.id}>
