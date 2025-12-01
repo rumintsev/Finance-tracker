@@ -12,7 +12,7 @@ const pool = new Pool({
 });
 ```
 
-А это значит, что перед использованием должна быть настроена PostgreSQL база данных с полями id:int, name:char var, amount:int, date:date (yyyy-mm-dd)
+А это значит, что перед использованием должна быть настроена PostgreSQL база данных finance_tracker с таблицей expenses и столбцами id:int, name:char var, amount:int, date:date (yyyy-mm-dd)
 
 ## Команды запуска
 
