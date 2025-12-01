@@ -36,6 +36,16 @@ export async function POST(req: Request) {
   try {
     const { name, amount, date } = await req.json();
 
+    if (!name || amount === undefined || !date)
+      return NextResponse.json({ error: "Missing fields" }, { status: 400 });
+
+    if (typeof amount !== "number")
+      return NextResponse.json({ error: "Amount must be a number" }, { status: 400 });
+
+    // дата в формате yyyy-mm-dd и валидная
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || isNaN(new Date(date).getTime()))
+      return NextResponse.json({ error: "Invalid date" }, { status: 400 });
+
     const res = await pool.query(
       'INSERT INTO expenses(name, amount, date) VALUES($1, $2, $3) RETURNING *',
       [name, amount, date]
